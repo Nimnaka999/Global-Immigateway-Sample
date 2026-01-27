@@ -17,7 +17,7 @@ import {
   Target,
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { AppView } from "../App";
+import { AppView } from "../src/App";
 
 interface LandingPageProps {
   onNavigate: (view: AppView) => void;
@@ -156,7 +156,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold text-[#0A1628] mb-6">
-              Your Gateway to
+              nandun
               <br />
               Global Success
             </h2>

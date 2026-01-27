@@ -6,7 +6,7 @@ import {
   Shield, Clock, MessageCircle, Star
 } from 'lucide-react';
 import { AppView } from '../App';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ModernLandingPageProps {
   onNavigate: (view: AppView) => void;
@@ -422,19 +422,29 @@ export function ModernLandingPage({ onNavigate }: ModernLandingPageProps) {
 
               {/* Login/Account */}
               {!isLoggedIn ? (
-                <motion.button
-                  onClick={() => setShowAuthModal('login')}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold ${
-                    isDark 
-                      ? 'bg-slate-700/50 text-slate-200 hover:bg-slate-700' 
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                  } transition-colors`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <LogIn className="w-4 h-4" />
-                  Login
-                </motion.button>
+                <div className="flex items-center gap-2">
+                  <motion.button
+                    onClick={() => setShowAuthModal('login')}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold ${
+                      isDark 
+                        ? 'bg-slate-700/50 text-slate-200 hover:bg-slate-700' 
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    } transition-colors`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <LogIn className="w-4 h-4" />
+                    Login
+                  </motion.button>
+                  <motion.button
+                    onClick={() => setShowAuthModal('signup')}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg transition-all`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Sign In
+                  </motion.button>
+                </div>
               ) : (
                 <div className="relative group">
                   <motion.div
@@ -448,25 +458,7 @@ export function ModernLandingPage({ onNavigate }: ModernLandingPageProps) {
                 </div>
               )}
 
-              {/* CTA Button */}
-              <motion.button
-                onClick={() => {
-                  const element = document.getElementById('eligibility-checker');
-                  element?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="hidden lg:flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:shadow-2xl hover:shadow-purple-500/50 transition-all relative overflow-hidden group"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600"
-                  initial={{ x: '100%' }}
-                  whileHover={{ x: '0%' }}
-                  transition={{ duration: 0.3 }}
-                />
-                <span className="relative z-10">Get Free Eligibility Score</span>
-                <Sparkles className="w-5 h-5 relative z-10" />
-              </motion.button>
+              
             </div>
           </div>
         </div>
@@ -662,153 +654,6 @@ export function ModernLandingPage({ onNavigate }: ModernLandingPageProps) {
           </div>
         </section>
 
-        {/* Eligibility Checker Section */}
-        <section 
-          id="eligibility-checker"
-          className="container mx-auto px-6 py-20"
-        >
-          <motion.div
-            className={`max-w-4xl mx-auto rounded-3xl ${
-              isDark ? 'bg-slate-800/50' : 'bg-white'
-            } backdrop-blur-xl border ${
-              isDark ? 'border-slate-700' : 'border-amber-200'
-            } shadow-2xl overflow-hidden`}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Header */}
-            <div className={`text-center py-8 px-6 ${
-              isDark 
-                ? 'bg-gradient-to-r from-amber-600/20 via-orange-600/20 to-amber-600/20' 
-                : 'bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50'
-            }`}>
-              <div className="flex items-center justify-center gap-2 mb-3">
-                <Zap className="w-6 h-6 text-amber-600" />
-                <span className="text-sm font-bold text-amber-600 uppercase tracking-wider">
-                  Live Eligibility Checker
-                </span>
-              </div>
-              <h2 className={`text-3xl md:text-4xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                Get Your Instant Score
-              </h2>
-              <p className={`mt-2 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                Answer three quick questions to see your immigration eligibility
-              </p>
-            </div>
-
-            {/* Form */}
-            <div className="p-8">
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
-                <div>
-                  <label className={`block text-sm font-bold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Your Age
-                  </label>
-                  <select
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                    className={`w-full px-4 py-3 rounded-xl ${
-                      isDark 
-                        ? 'bg-slate-700/50 border-slate-600 text-white' 
-                        : 'bg-slate-50 border-slate-200 text-slate-900'
-                    } border-2 focus:border-blue-500 focus:outline-none transition-colors`}
-                  >
-                    <option value="18-24">18-24 years</option>
-                    <option value="25-35">25-35 years</option>
-                    <option value="36-45">36-45 years</option>
-                    <option value="46+">46+ years</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className={`block text-sm font-bold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Education Level
-                  </label>
-                  <select
-                    value={education}
-                    onChange={(e) => setEducation(e.target.value)}
-                    className={`w-full px-4 py-3 rounded-xl ${
-                      isDark 
-                        ? 'bg-slate-700/50 border-slate-600 text-white' 
-                        : 'bg-slate-50 border-slate-200 text-slate-900'
-                    } border-2 focus:border-blue-500 focus:outline-none transition-colors`}
-                  >
-                    <option value="high-school">High School</option>
-                    <option value="bachelors">Bachelor's Degree</option>
-                    <option value="masters">Master's Degree</option>
-                    <option value="phd">PhD/Doctorate</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className={`block text-sm font-bold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Budget Range
-                  </label>
-                  <select
-                    value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
-                    className={`w-full px-4 py-3 rounded-xl ${
-                      isDark 
-                        ? 'bg-slate-700/50 border-slate-600 text-white' 
-                        : 'bg-slate-50 border-slate-200 text-slate-900'
-                    } border-2 focus:border-blue-500 focus:outline-none transition-colors`}
-                  >
-                    <option value="low">Under $10,000</option>
-                    <option value="medium">$10,000 - $25,000</option>
-                    <option value="high">$25,000+</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Score Display */}
-              <motion.div
-                className={`rounded-2xl p-8 text-center ${
-                  isDark 
-                    ? 'bg-gradient-to-br from-slate-900 to-slate-800' 
-                    : 'bg-gradient-to-br from-slate-900 to-blue-900'
-                }`}
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <p className="text-sm font-bold text-amber-400 uppercase tracking-wider mb-4">
-                  Your Eligibility Score
-                </p>
-                <motion.div
-                  className="text-7xl font-bold text-white mb-4"
-                  key={calculateScore()}
-                  initial={{ scale: 1.2, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: 'spring', stiffness: 200 }}
-                >
-                  {calculateScore()}%
-                </motion.div>
-                <p className="text-slate-300 text-lg mb-6">
-                  {calculateScore() >= 80 
-                    ? 'Excellent! You qualify for multiple immigration options.' 
-                    : calculateScore() >= 60 
-                    ? 'Good! You qualify for several immigration options.' 
-                    : 'Fair! Let\'s explore your options together.'}
-                </p>
-
-                <motion.button
-                  onClick={() => {
-                    if (calculateScore() >= 60) {
-                      onNavigate('immigration');
-                    }
-                  }}
-                  className="px-8 py-4 rounded-xl font-bold text-slate-900 bg-gradient-to-r from-amber-400 to-orange-500 hover:shadow-2xl hover:shadow-amber-500/50 transition-all"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Get Full Assessment Report
-                </motion.button>
-              </motion.div>
-            </div>
-          </motion.div>
-        </section>
-
         {/* Features Section */}
         <section id="features" className="container mx-auto px-6 py-20">
           <motion.div
@@ -889,70 +734,6 @@ export function ModernLandingPage({ onNavigate }: ModernLandingPageProps) {
               </motion.div>
             ))}
           </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="container mx-auto px-6 py-20">
-          <motion.div
-            className={`relative overflow-hidden rounded-3xl ${
-              isDark 
-                ? 'bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900' 
-                : 'bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600'
-            } p-12 md:p-20 text-center`}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            {/* Decorative elements */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-10 left-10 w-32 h-32 border-4 border-white rounded-full" />
-              <div className="absolute bottom-10 right-10 w-48 h-48 border-4 border-white rounded-full" />
-              <div className="absolute top-1/2 left-1/4 w-24 h-24 border-4 border-white rounded-full" />
-            </div>
-
-            <div className="relative z-10">
-              <motion.h2
-                className="text-4xl md:text-6xl font-bold text-white mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                Ready to Start Your Journey?
-              </motion.h2>
-              <motion.p
-                className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-              >
-                Book a free consultation with our immigration experts today
-              </motion.p>
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4 justify-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-              >
-                <motion.button
-                  className="px-8 py-4 rounded-xl font-bold text-blue-600 bg-white hover:bg-blue-50 transition-colors shadow-xl"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setShowAuthModal('signup')}
-                >
-                  Get Started Free
-                </motion.button>
-                <motion.button
-                  className="px-8 py-4 rounded-xl font-bold text-white border-2 border-white hover:bg-white/10 transition-colors"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Schedule Consultation
-                </motion.button>
-              </motion.div>
-            </div>
-          </motion.div>
         </section>
       </main>
 
@@ -1193,7 +974,7 @@ export function ModernLandingPage({ onNavigate }: ModernLandingPageProps) {
                     setShowAuthModal(null);
                   }}
                 >
-                  {showAuthModal === 'login' ? 'Sign In' : 'Create Account'}
+                  {showAuthModal === 'login' ? 'Login' : 'Sign In'}
                 </motion.button>
               </form>
 
